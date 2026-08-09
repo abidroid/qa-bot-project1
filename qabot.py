@@ -96,6 +96,8 @@ def get_llm():
     )
     return llm
 
+# Joins retrieved document chunks into a single string so the prompt
+# receives one clean block of context instead of a list of objects.
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
@@ -128,6 +130,7 @@ def retriever_qa(file, query):
 
 
 
+# Wires the RAG function into a Gradio web UI: one PDF upload, one question box, one answer box.
 rag_application = gr.Interface(
     fn=retriever_qa,
     inputs=[
